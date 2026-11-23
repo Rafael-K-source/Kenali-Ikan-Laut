@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Kenali Ikan Laut AR</title>
+<style>
+:root{--n:#08283d;--y:#f4b84a;--t:#0e7c8b;--l:#f0f6fa;--x:#0d2a40;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Nunito,system-ui,sans-serif;background:var(--n);color:#fff}
+#app{position:relative;max-width:480px;height:100%;margin:auto;overflow:hidden}
+.s{position:absolute;inset:0;display:none;flex-direction:column;padding:18px;overflow-y:auto;background:var(--n)}.s.on{display:flex}
+.s.L{background:var(--l);color:var(--x)}
+h1{font-size:34px;margin:6px 0;line-height:1.1}h2{font-size:26px;margin:8px 0}p{margin:6px 0}
+.k{color:#7cc4d4;letter-spacing:.15em;font-weight:800;font-size:13px}
+.b{border:0;border-radius:18px;padding:16px;font:800 17px inherit;font-family:inherit;background:var(--y);color:var(--n);width:100%;margin-top:10px;cursor:pointer}
+.b.t{background:var(--t);color:#fff}.b.o{background:none;border:2px solid #2a8db5;color:#fff}
+.bk{display:flex;align-items:center;gap:10px;font-weight:800;color:#456}.bk i{width:42px;height:42px;border-radius:50%;background:#d6e9f2;display:grid;place-items:center;font-style:normal;font-size:20px;color:var(--x);cursor:pointer}
+.dk .bk{color:#fff}.dk .bk i{background:#08283d;color:#fff}
+.card{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #d3e6ee;border-radius:20px;padding:10px;margin:8px 0;cursor:pointer}
+.card svg{width:84px;background:#e0eef5;border-radius:14px;padding:6px}.card b{font-size:18px}.card em{display:block;color:#567;font-size:13px}
+input{width:100%;padding:12px 16px;border-radius:14px;border:2px solid #cfe2ea;font:16px inherit;font-family:inherit;margin:8px 0}
+#vw{position:relative;flex:1;margin:8px -18px;background:#1b3a4b;touch-action:none;overflow:hidden}
+#vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.pill{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:#08283dcc;padding:8px 14px;border-radius:14px;font-size:13px;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis}
+.row{display:flex;gap:6px}.row button{flex:1;border:0;border-radius:14px;background:#08283d;color:#fff;padding:13px 2px;font:700 13px inherit;font-family:inherit}.row button.a{background:var(--y);color:var(--n)}
+.row.w{flex-wrap:wrap}
+.ir{display:flex;justify-content:space-between;border-bottom:2px solid #d3e3ea;padding:14px 0}.ir b{color:#456}.ir span{text-align:right;max-width:62%}
+.fact{background:#fff0d0;border-radius:16px;padding:14px;margin-top:16px}
+.hero{background:#dcecf4;border-radius:24px;padding:20px}
+.pb{height:10px;background:#d3e6ee;border-radius:9px;margin:10px 0}.pb i{display:block;height:100%;background:var(--t);border-radius:9px}
+.op{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid #d3e6ee;border-radius:18px;padding:16px;margin:8px 0;font-weight:800;font-size:17px;width:100%;text-align:left;font-family:inherit;color:var(--x)}
+.op.ok{background:#c9f0d4;border-color:#2a9d5c}.op.no{background:#fbd5d5;border-color:#d64545}
+.op u{width:34px;height:34px;border-radius:50%;background:#dcecf4;display:grid;place-items:center;text-decoration:none;flex:none}
+.gr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qc{background:#fff;border:2px dashed #7aa;border-radius:16px;padding:10px;text-align:center;color:var(--x);break-inside:avoid;font-size:13px}.qc div{display:flex;justify-content:center;margin:6px 0}.qc b{display:block;font-size:15px}
+#tt{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:#000b;padding:8px 14px;border-radius:12px;font-size:13px;display:none;z-index:9;max-width:90%;text-align:center}
+@media print{.s:not(#cards){display:none!important}#cards{position:static;overflow:visible}.np{display:none}}
+</style></head><body><div id="app">
+<section class="s on" id="home"><div class="k" style="margin-top:30px">APLIKASI AR EDUKASI</div><h1 style="font-size:46px">Kenali Ikan Laut</h1><p style="color:#c5dbe6;font-size:18px">Scan kartu QR, lihat ikan muncul dalam 3D, lalu geser ke akuarium. 🐟🦈🐠🐙</p><div id="hs" style="margin:auto;width:100%"></div>
+<button class="b" onclick="showScan()">Scan Kartu QR</button><button class="b o" onclick="show('list')">Lihat 40 Jenis</button><button class="b o" onclick="show('cards')">Kartu QR untuk dicetak</button><p style="text-align:center;color:#7cc4d4;font-size:14px">Realitas Tertambah dan Realitas Maya</p></section>
+<section class="s L" id="list"><div class="bk"><i onclick="show('home')">‹</i>Daftar Ikan</div><h2>Pilih ikan yang ingin kamu kenali</h2><p>Ketuk salah satu ikan untuk melihatnya dalam bentuk 3D.</p><input id="q" placeholder="Cari ikan…" oninput="mkList()"><button class="b t" onclick="showScan()" style="margin:4px 0 8px">Scan Kartu QR</button><div id="ls"></div></section>
+<section class="s dk" id="scan"><div class="bk"><i onclick="show('home')">‹</i>Scan Kartu QR</div><div style="flex:none;height:46%;min-height:260px;margin:16px 0 8px;border:3px solid var(--y);border-radius:26px;overflow:hidden;background:#0a1f2e"><video id="sv2" playsinline muted style="width:100%;height:100%;object-fit:cover"></video></div><p style="text-align:center;font-size:14px;font-weight:700;margin:14px 0">Arahkan kamera ke kartu QR ikan sampai terdeteksi.</p><div style="background:#051a29;border-radius:14px;padding:14px;font-weight:700;font-size:14px;margin:6px 0">Satu kartu untuk satu jenis. Ada 40 kartu yang bisa discan.</div><button class="b" onclick="simScan()">Simulasi: kartu terdeteksi</button><button class="b o" onclick="showQR()">Tampilkan kartu QR di layar</button></section>
+<section class="s dk" id="view" style="padding-bottom:12px"><div class="bk"><i onclick="show('list')">‹</i><span id="ttl"></span><span id="cnt" style="margin-left:auto;background:#08283d;padding:8px 12px;border-radius:14px;color:#fff">🐠 0 / 5</span></div>
+<div id="vw"><video id="vid" playsinline muted></video><canvas id="cv"></canvas><div class="pill" id="hint">Geser untuk memutar, cubit untuk memperbesar</div><div id="dz" style="display:none;position:absolute;left:0;right:0;bottom:0;height:22%;background:#0e7c8b66;border-top:3px dashed #7cc4d4;text-align:center;padding-top:8px;font-weight:800;pointer-events:none">🐠 Akuarium: lepas ikan di sini</div></div>
+<div class="row" id="mb"><button data-m="putar" onclick="setMode('putar')">Putar</button><button data-m="gerak" onclick="setMode('gerak')">Gerakkan</button><button data-m="bebas" onclick="setMode('bebas')">Berenang</button><button data-m="seret" onclick="setMode('seret')">Seret</button></div><div class="row" style="margin-top:6px"><button onclick="anat()">Anatomi</button><button onclick="zoom(1.25)">Perbesar</button><button onclick="zoom(.8)">Perkecil</button></div>
+<div class="row" style="margin-top:6px"><button id="arb" onclick="ar?arOff():arOn()">Mode AR</button><button onclick="sim()">Simulasi kartu</button><button onclick="showQR()">Tampilkan QR</button></div>
+<button class="b" onclick="info()" style="margin-top:8px">Lihat Info Ikan</button></section>
+<section class="s L" id="info"><div class="bk"><i onclick="show('view')">‹</i>Info Ikan</div><div class="hero" id="ih" style="margin-top:12px"></div><h1 id="in" style="font-size:32px;margin-top:14px"></h1><em id="il" style="color:#567"></em><div id="id"></div><div class="fact" id="if"></div><button class="b t" style="margin-top:auto" onclick="startQ()">Coba Kuis</button></section>
+<section class="s L" id="quiz"><div class="bk"><i onclick="show('info')">‹</i>Kuis</div><div style="display:flex;justify-content:space-between;font-weight:800;color:#456;margin-top:14px"><span id="qn"></span><span id="qs"></span></div><div class="pb"><i id="qp"></i></div><h2 id="qt"></h2><div id="qo"></div></section>
+<section class="s" id="done" style="text-align:center;align-items:center"><div style="width:110px;height:110px;border-radius:50%;background:var(--y);display:grid;place-items:center;font-size:56px;color:var(--n);margin-top:30px">✓</div><h1>Kuis Selesai!</h1><p style="color:#c5dbe6">Terima kasih sudah belajar mengenal ikan laut bersama kami.</p><div style="background:#ffffff14;border-radius:22px;padding:18px;width:100%;margin:14px 0"><div class="k">SKOR KAMU</div><div style="font-size:64px;font-weight:800;color:var(--y)"><span id="ds"></span><small style="font-size:24px;color:#cde"> / 2</small></div></div><button class="b" style="margin-top:auto" onclick="show('list')">Kembali ke Menu</button><button class="b o" onclick="startQ()">Ulangi Kuis</button></section>
+<section class="s L" id="cards"><div class="bk np"><i onclick="show('home')">‹</i>Kartu QR Ikan</div><p class="np">Cetak kartu ini, lalu scan dengan kamera HP (membuka ikan langsung) atau lewat Mode AR di aplikasi (ikan muncul di atas kartu dan mengikuti gerakannya).</p><button class="b t np" onclick="window.print()">Cetak / Simpan PDF</button><div class="gr" id="cg" style="margin-top:10px"></div></section>
+<div id="qm" onclick="this.style.display='none'" style="display:none;position:absolute;inset:0;background:#000d;z-index:20;align-items:center;justify-content:center;color:var(--x)"><div style="background:#fff;padding:18px;border-radius:20px;text-align:center"><b id="qmn"></b><div id="qmc" style="display:flex;justify-content:center;margin:10px"></div><small>Ketuk untuk menutup</small></div></div><div id="tt"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const D=`Ikan Tongkol;Euthynnus affinis;Laut tropis dekat pantai;40–60 cm;Ikan kecil dan cumi;Tongkol berenang berkelompok dan bergerak sangat cepat.;#2a8db5;#d3e8f0;0
+Ikan Cakalang;Katsuwonus pelamis;Laut tropis lepas pantai;60–80 cm;Ikan kecil, cumi, udang;Cakalang adalah bahan utama cakalang fufu khas Manado.;#6b4fa0;#d9d0ea;0
+Tuna Sirip Kuning;Thunnus albacares;Laut terbuka tropis;100–150 cm;Ikan, cumi, krustasea;Sirip kuningnya makin panjang saat ikan dewasa.;#2e5d8a;#f2d45c;0
+Ikan Tenggiri;Scomberomorus commerson;Perairan pantai tropis;100–150 cm;Ikan kecil dan cumi;Perenang cepat dengan gigi tajam seperti pisau.;#6f8fa3;#e4edf1;2
+Kakap Merah;Lutjanus malabaricus;Dasar laut berkarang;60–100 cm;Ikan kecil dan udang;Warna merahnya menjadi ciri khas dan sangat digemari.;#d9443a;#f6c9c2;1
+Kerapu Macan;Epinephelus fuscoguttatus;Terumbu karang;60–90 cm;Ikan dan krustasea;Kerapu bisa berganti jenis kelamin saat dewasa.;#8a6a4a;#d9c4a8;1
+Ikan Baronang;Siganus guttatus;Padang lamun dan terumbu;25–35 cm;Alga dan lamun;Sirip punggungnya berduri dan sedikit berbisa.;#9aa84a;#e9edc4;1
+Bawal Hitam;Parastromateus niger;Perairan pantai dangkal;30–40 cm;Plankton dan krustasea kecil;Tubuhnya pipih seperti berlian.;#4a5a68;#b8c4cc;1
+Ikan Layang;Decapterus russelli;Laut lepas dekat permukaan;20–30 cm;Plankton;Hidup berkelompok besar dan sering ditangkap nelayan.;#4f9fc2;#e8f3f7;0
+Ikan Kembung;Rastrelliger kanagurta;Perairan pantai;20–30 cm;Plankton halus;Menyaring plankton dengan mulut terbuka lebar.;#3b8f8a;#eaf2ec;0
+Ikan Teri;Stolephorus sp.;Perairan pantai;7–10 cm;Plankton kecil;Sering dikeringkan menjadi ikan asin.;#aab9c4;#f3f6f8;2
+Ikan Lemuru;Sardinella lemuru;Laut lepas;15–20 cm;Plankton;Bahan baku sarden kaleng.;#5f87a8;#e3ecf2;0
+Pari Manta;Mobula birostris;Laut terbuka tropis;400–700 cm;Plankton;Rentang sayapnya bisa lebih dari 5 meter.;#2d3b4a;#f0f0f0;3
+Hiu Paus;Rhincodon typus;Laut tropis hangat;800–1.200 cm;Plankton;Ikan terbesar di dunia dan tidak berbahaya bagi manusia.;#3f5f7a;#e8eef2;0
+Hiu Sirip Hitam;Carcharhinus melanopterus;Terumbu karang dangkal;100–150 cm;Ikan kecil dan cumi;Ujung siripnya berwarna hitam yang jelas.;#8a8f94;#f2f2f2;0
+Ikan Badut;Amphiprion ocellaris;Terumbu karang;8–11 cm;Alga dan plankton;Berlindung di anemon laut tanpa tersengat.;#f2762e;#fbe3cf;4
+Botana Biru;Paracanthurus hepatus;Terumbu karang;20–30 cm;Plankton dan alga;Punya duri tajam di pangkal ekor untuk bertahan.;#2f6fd0;#f4d84a;1
+Ikan Napoleon;Cheilinus undulatus;Terumbu karang;100–200 cm;Moluska dan krustasea;Dahinya menonjol dan statusnya terancam punah.;#2f8f8a;#9fd3c7;1
+Ikan Kuwe;Caranx ignobilis;Terumbu dan perairan pantai;80–100 cm;Ikan kecil;Pemburu kuat yang sering berburu berkelompok.;#6f7f8a;#e3e8ea;1
+Ikan Barakuda;Sphyraena barracuda;Terumbu karang;100–150 cm;Ikan lain;Tubuh memanjang dengan gigi sangat tajam.;#7a8a96;#e8eef2;2
+Marlin Biru;Makaira nigricans;Laut lepas tropis;300–400 cm;Tuna dan cumi;Moncongnya panjang seperti tombak.;#244f8f;#dfe9f4;2
+Ikan Layar;Istiophorus platypterus;Laut lepas tropis;200–300 cm;Ikan kecil dan cumi;Siripnya mengembang seperti layar dan sangat cepat.;#2a5f9a;#e3edf5;2
+Ikan Pedang;Xiphias gladius;Laut dalam dan permukaan;200–400 cm;Ikan dan cumi;Moncongnya pipih seperti pedang.;#4a5a6f;#d8dfe6;2
+Julung-julung;Hemiramphus far;Permukaan laut;25–30 cm;Plankton dan alga;Rahang bawahnya memanjang seperti paruh.;#6fb09a;#e9f4ef;2
+Tuna Mata Besar;Thunnus obesus;Laut dalam tropis;150–200 cm;Ikan dan cumi;Matanya besar untuk melihat di perairan dalam.;#3a4f78;#e5e9f0;0
+Kerapu Bebek;Cromileptes altivelis;Terumbu karang;50–70 cm;Ikan kecil dan udang;Kepalanya kecil dengan bintik hitam di tubuh.;#d8d2c0;#f4f0e4;1
+Ikan Kakatua;Scarus sp.;Terumbu karang;30–70 cm;Alga pada karang;Giginya menyatu seperti paruh dan menghasilkan pasir.;#2fa88a;#f08fc0;1
+Ikan Butana;Acanthurus lineatus;Terumbu karang;15–25 cm;Alga;Bergaris biru kuning dan berduri di ekor.;#f2d23a;#3a8fd8;1
+Lepu Ayam;Pterois volitans;Terumbu karang;20–35 cm;Ikan kecil dan udang;Duri siripnya beracun, jangan disentuh.;#b8402f;#f1d9c8;1
+Ikan Buntal;Arothron hispidus;Terumbu dan pantai;30–50 cm;Moluska dan karang;Menggembung saat terancam dan tubuhnya beracun.;#b0a070;#f4eed8;4
+Kuda Laut;Hippocampus kuda;Padang lamun;10–17 cm;Plankton kecil;Kuda laut jantan yang mengandung dan melahirkan anak.;#e3b83a;#f6e8b8;4
+Ikan Mola-mola;Mola mola;Laut terbuka;180–300 cm;Ubur-ubur;Ikan bertulang terberat di dunia.;#8a98a0;#dfe5e8;4
+Ikan Selar;Selar crumenophthalmus;Perairan pantai;20–25 cm;Plankton;Matanya besar dengan kelopak berlemak.;#5a9fb8;#f0f5f7;0
+Ikan Sunu;Plectropomus leopardus;Terumbu karang;40–70 cm;Ikan kecil;Bintik biru terang menghiasi seluruh tubuhnya.;#d8503a;#f7c9c0;1
+Ekor Kuning;Caesio cuning;Terumbu karang;25–35 cm;Zooplankton;Hidup berkelompok dengan ekor kuning cerah.;#3a8fd0;#f2dc4a;0
+Ikan Bobara;Caranx sexfasciatus;Terumbu karang;60–80 cm;Ikan dan krustasea;Berburu berkelompok di sekitar terumbu.;#7a8c96;#eef2f4;1
+Ikan Belanak;Mugil cephalus;Muara dan pantai;30–50 cm;Alga dan detritus;Sering melompat keluar dari air.;#8aa0ac;#f0f4f6;0
+Ikan Terbang;Cheilopogon sp.;Permukaan laut;25–30 cm;Plankton;Mampu meluncur di udara hingga ratusan meter.;#3a7fb0;#e5f0f6;2
+Raja Laut;Latimeria menadoensis;Laut dalam;100–140 cm;Ikan dan cumi;Fosil hidup yang ditemukan di perairan Manado.;#2f4a8f;#b8c8e8;1
+Ikan Bendera;Zanclus cornutus;Terumbu karang;15–23 cm;Spons dan alga;Sirip punggungnya memanjang seperti bendera.;#f4eaa0;#2a2a2a;1`.split("\n").map(r=>{const a=r.split(";");return{n:a[0],l:a[1],h:a[2],u:a[3],m:a[4],f:a[5],c:a[6],b:a[7],s:+a[8]}});
+const SP=[[1.6,.42,.4,.3,1,4,2,.8,0,0],[1.55,.46,.44,.34,1,4,2,.8,0,0],[1.7,.44,.42,.3,1,4,2,.9,0,0],[2,.3,.28,.2,1.1,4,0,.7,0,0],[1.2,.62,.5,.26,.9,2,0,.8,0,0],[1.2,.58,.5,.36,.85,2,1,.8,0,0],[1,.62,.5,.2,.9,2,0,.7,0,0],[.95,.85,.8,.18,1,1,0,.7,0,0],[1.5,.34,.32,.22,1,4,0,.7,0,0],[1.4,.38,.34,.26,1,4,0,.6,0,0],[1.4,.18,.16,.12,1.1,1,0,.5,0,0],[1.3,.34,.3,.2,1,1,0,.6,0,0],[1,.12,.08,1.4,.9,7,3,0,0,0],[1.9,.5,.4,.4,.9,1,2,1,0,0],[1.7,.4,.34,.3,.9,1,2,1.1,0,0],[.75,.55,.5,.36,.9,2,1,.6,0,0],[.9,.65,.6,.2,.9,1,2,.8,0,0],[1.5,.6,.5,.32,.9,2,1,.8,10,0],[1.2,.62,.55,.22,.8,4,0,.7,0,0],[2.1,.28,.25,.24,1.2,4,0,.6,0,0],[2.1,.34,.3,.26,1,3,2,.7,1,.8],[1.9,.3,.26,.2,1,3,2,.6,1,.45],[1.9,.34,.3,.26,1,1,2,.5,2,.55],[1.7,.2,.18,.16,1.1,1,0,.6,3,.3],[1.6,.5,.48,.34,1,4,2,.8,0,0],[1,.6,.5,.26,.85,2,1,.8,0,0],[1.2,.55,.5,.3,.9,2,1,.8,10,0],[.9,.62,.56,.18,.9,2,2,.7,0,0],[1,.45,.4,.3,.9,5,1,3,0,0],[.7,.7,.65,.6,.9,4,4,.5,0,0],[.8,.2,.18,.15,1,7,4,.5,11,.5],[.75,.95,.95,.25,.9,8,5,.3,0,0],[1.3,.36,.34,.24,1,4,0,.6,0,0],[1.5,.45,.4,.28,1,2,1,.8,0,0],[1.3,.38,.34,.22,1,1,0,.7,0,0],[1.2,.6,.55,.24,.85,4,0,.7,0,0],[1.5,.34,.3,.24,1.05,4,0,.6,0,0],[1.5,.26,.24,.18,1.1,1,0,2.4,0,0],[1.4,.6,.55,.4,.9,4,1,1.4,0,0],[1,.85,.85,.16,.9,6,4,.6,1,.3]],ENV=(t,k)=>Math.pow(Math.sin(Math.PI*Math.pow(t,k)),.6)||0;D.forEach((d,i)=>d.i=i);const S=[],$=i=>document.getElementById(i);
+const svOld=d=>`<svg viewBox="0 0 100 50"><path d="M8 25L26 10V40Z" fill="${d.c}"/><ellipse cx="55" cy="25" rx="35" ry="15" fill="${d.c}"/><path d="M20 25Q55 46 90 25Q55 29 20 25" fill="${d.b}"/><circle cx="76" cy="21" r="2.5" fill="#08283d"/></svg>`;
+let fi=null,F=null,zm=1,mode='putar',auto=1,ar=0,vs=null,R,cam,SC,sea,T=0,nt=0,last=0,tg,cur='home';
+function show(id){cur=id;document.querySelectorAll('.s').forEach(e=>e.classList.toggle('on',e.id==id));if(id!='view')arOff();if(id!='scan')offScan();if(id=='view')setTimeout(rs,60);if(id=='cards')mkCards();if(id=='list')mkList()}
+function tt(m){const e=$('tt');e.textContent=m;e.style.display='block';clearTimeout(e.h);e.h=setTimeout(()=>e.style.display='none',2200)}
+$('hs').innerHTML=sv(D[0]).replace('<svg','<svg style="width:100%"');
+function mkList(){const q=$('q').value.toLowerCase();$('ls').innerHTML=D.map((d,i)=>[d,i]).filter(([d])=>(d.n+d.l).toLowerCase().includes(q)).map(([d,i])=>`<div class="card" onclick="viewFish(${i})">${sv(d)}<div><b>${d.n}</b><em>${d.l}</em></div></div>`).join('')}
+function sh(i){const[L,Ht,Hb,W,k,dor,tail,ps,ext,ev]=SP[i],X=t=>-L+2*L*t,top=t=>Ht*ENV(t,k),bot=t=>-Hb*ENV(t,k),fh=Math.min(Math.max(Ht,.35),.5),T=Math.max(Ht,Hb)+.1,ta=.35+T*.6,fp=(a,f)=>a.map(p=>[X(p[0]),(f||top)(p[0])+p[1]*fh*(f?-1:1)]);
+const DR={1:[[[.28,0],[.36,.9],[.6,0]]],2:[[[.18,0],[.22,.45],[.8,.4],[.84,0]]],3:[[[.25,0],[.3,1.4],[.55,2.2],[.8,.8],[.82,0]]],4:[[[.28,0],[.36,.9],[.6,0]],[[.7,0],[.74,.4],[.84,0]]],5:[0,1,2,3].map(q=>[[.3+q*.13,0],[.33+q*.13,1.7],[.4+q*.13,0]]),6:[[[.6,0],[.5,.6],[.12,1.6],[.35,0]]],8:[[[.4,0],[.5,1.2],[.65,0]]],7:[]}[dor],dorsal=DR.map(a=>fp(a));if(dor==8)dorsal.push(fp(DR[0],bot));
+const TL={0:[[0,.25*T],[-ta*.9,T],[-ta*.5,0],[-ta*.9,-T],[0,-.25*T]],1:[[0,.2*T],[-ta,T*.9],[-ta*1.2,0],[-ta,-T*.9],[0,-.2*T]],2:[[0,.15*T],[-ta*.8,1.5*T],[-ta*.4,0],[-ta*.8,-1.5*T],[0,-.15*T]],3:[[0,.06],[-L*1.4,0],[0,-.06]],4:[[0,.2*T],[-ta*.5,0],[0,-.2*T]],5:[[0,.9*T],[-ta*.5,.6*T],[-ta*.5,-.6*T],[0,-.9*T]]}[tail];
+const bill=ext==1?[[[L-.08,.08],[L+ev*L,0],[L-.08,-.08]]]:ext==2?[[[L-.08,.2],[L+ev*L,0],[L-.08,-.2]]]:ext==3?[[[L-.1,-.02],[L+ev*L,-Hb*.2],[L-.1,-.14]]]:ext==11?[[[L-.05,.08],[L+ev,0],[L-.05,-.08]]]:[],hump=ext==10?[[X(.7),top(.7)],[X(.78),top(.7)+.2],[X(.92),top(.92)]]:null;
+return{L,Ht,Hb,W,k,ps,ext,X,top,bot,dorsal,tail:TL,bill,hump,pel:dor==7||dor==8?null:fp([[.5,0],[.58,.7],[.7,0]],bot)}}
+function sv(d){const s=sh(d.i),N=10,tp=[],bt=[],fl=s.W>1;for(let i=0;i<N;i++){const t=i/(N-1),h=fl?s.W*ENV(t,s.k):0;tp.push([s.X(t),fl?h:s.top(t)]);bt.push([s.X(t),fl?-h:s.bot(t)])}
+const e1=[s.X(1),0],e0=[s.X(0),0],tl=s.tail.map(p=>[p[0]-s.L,p[1]]),Y='#f4b84a',P=[[tl,d.c],[tl,'#000',.22],...(fl?[]:s.dorsal.map(a=>[a,Y])),...(s.pel?[[s.pel,Y]]:[]),[tp.concat([e1,e0]),d.c],[bt.concat([e1,e0]),d.b]];
+for(let i=0;i<N-2;i+=2){const m=[s.X((i+1)/(N-1)),0];P.push([[tp[i],tp[i+2],m],'#000',.13],[[bt[i],bt[i+2],m],'#fff',.25])}
+s.bill.forEach(a=>P.push([a,d.c]));if(s.hump)P.push([s.hump,d.c]);
+const rz=s.ext==11?1.2:0,c=Math.cos(rz),n=Math.sin(rz),R=p=>[p[0]*c-p[1]*n,p[0]*n+p[1]*c],Q=P.map(a=>[a[0].map(R),a[1],a[2]||1]),A=Q.flatMap(a=>a[0]),x0=Math.min(...A.map(p=>p[0])),x1=Math.max(...A.map(p=>p[0])),y0=Math.min(...A.map(p=>p[1])),y1=Math.max(...A.map(p=>p[1])),k=Math.min(90/(x1-x0),42/(y1-y0)),ox=50-k*(x0+x1)/2,oy=25+k*(y0+y1)/2,ey=R([s.X(.84),(fl?0:s.top(.84)*.4)]);
+return `<svg viewBox="0 0 100 50">${Q.map(a=>`<polygon points="${a[0].map(p=>(ox+p[0]*k).toFixed(1)+','+(oy-p[1]*k).toFixed(1)).join(' ')}" fill="${a[1]}" opacity="${a[2]}"/>`).join('')}${fl?'':`<circle cx="${(ox+ey[0]*k).toFixed(1)}" cy="${(oy-ey[1]*k).toFixed(1)}" r="2" fill="#08283d"/><circle cx="${(ox+ey[0]*k+.7).toFixed(1)}" cy="${(oy-ey[1]*k-.7).toFixed(1)}" r=".7" fill="#fff"/>`}</svg>`}
+function bodyG(s,c1,c2){const N=10,Rn=6,P=[],C=[],A=new THREE.Color(c1),B=new THREE.Color(c2),pt=(i,j)=>{const t=i/(N-1),e=ENV(t,s.k),a=j%Rn*6.2832/Rn,y=Math.sin(a);return[s.X(t),y*(y>0?s.Ht:s.Hb)*e,Math.cos(a)*s.W*e]};
+for(let i=0;i<N-1;i++)for(let j=0;j<Rn;j++){const q=[pt(i,j),pt(i+1,j),pt(i+1,j+1),pt(i,j+1)],m=Math.sin((j+.5)*6.2832/Rn),cc=(m<-.3?B:A).clone().multiplyScalar(1+((i*7+j*3)%5-2)*.05);[0,1,2,0,2,3].forEach(n=>{P.push(...q[n]);C.push(cc.r,cc.g,cc.b)})}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.setAttribute('color',new THREE.Float32BufferAttribute(C,3));g.computeVertexNormals();return g}
+function mk(d,i){const s=sh(i),g=new THREE.Group(),m=new THREE.Group(),M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true,side:2}),Y='#f4b84a',
+F2=(pts,col)=>{const sp=new THREE.Shape();pts.forEach((p,j)=>j?sp.lineTo(p[0],p[1]):sp.moveTo(p[0],p[1]));return new THREE.Mesh(new THREE.ShapeGeometry(sp),M(col))};
+m.add(new THREE.Mesh(bodyG(s,d.c,d.b),new THREE.MeshLambertMaterial({vertexColors:true,flatShading:true,side:2})));
+s.dorsal.forEach(a=>m.add(F2(a,Y)));if(s.pel)m.add(F2(s.pel,Y));
+const tp=new THREE.Group();tp.position.x=-s.L;tp.add(F2(s.tail,new THREE.Color(d.c).multiplyScalar(.75)));m.add(tp);g.userData.tail=tp;
+if(s.ps)for(const z of[-1,1]){const pc=s.ps*.3,e=ENV(.6,s.k),f=F2([[0,0],[-pc,-pc*.15],[-pc*.35,-pc*.8]],Y);f.position.set(s.X(.62),-s.Hb*e*.3,z*s.W*e*.8);f.rotation.x=z*(s.ps>1.5?1.3:.9);m.add(f)}
+s.bill.forEach(a=>{const b=F2(a,d.c);m.add(b);if(s.ext!=2){const c=F2(a,d.c);c.rotation.x=1.5708;m.add(c)}});
+if(s.ext==10){const h=new THREE.Mesh(new THREE.SphereGeometry(1,7,5),M(d.c));h.scale.set(.3,.28,.26);h.position.set(s.X(.8),s.top(.8)*.9,0);m.add(h)}
+const er=.07+s.Ht*.07,ex=s.X(.84),ey=s.top(.84)*.4,ez=s.W*ENV(.84,s.k)*.85;
+if(s.W<1)for(const z of[-1,1]){const e=new THREE.Mesh(new THREE.SphereGeometry(er,8,6),new THREE.MeshBasicMaterial({color:0x08283d}));e.position.set(ex,ey,z*ez);m.add(e);const w=new THREE.Mesh(new THREE.SphereGeometry(er*.35,6,4),new THREE.MeshBasicMaterial({color:0xffffff}));w.position.set(ex+er*.4,ey+er*.4,z*(ez+er*.7));m.add(w)}
+if(s.ext==11)m.rotation.z=1.2;g.add(m);const bx=new THREE.Box3().setFromObject(g),z=new THREE.Vector3(),ct=new THREE.Vector3();bx.getSize(z);bx.getCenter(ct);m.position.set(-ct.x,-ct.y,0);g.userData.b=Math.min(3.4/z.x,2.6/z.y);return g}
+function mkOld(d){const g=new THREE.Group(),[L,H,W]=S[d.s],M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true});
+const bo=new THREE.Mesh(new THREE.SphereGeometry(1,10,7),M(d.c));bo.scale.set(L,H,W);g.add(bo);
+const be=new THREE.Mesh(new THREE.SphereGeometry(1,10,7,0,6.3,1.57,1.57),M(d.b));be.scale.set(L*1.02,H*1.02,W*1.02);g.add(be);
+const tp=new THREE.Group();tp.position.x=-L*.95;const tl=new THREE.Mesh(new THREE.ConeGeometry(Math.max(H,.3)*.9,L*.6,4),M(d.c));tl.rotation.z=Math.PI/2;tl.position.x=-L*.28;tl.scale.z=.25;tp.add(tl);g.add(tp);g.userData.tail=tp;
+const fn=(x,y,z,r,sz,rz)=>{const m=new THREE.Mesh(new THREE.ConeGeometry(sz,sz*1.6,4),M(d.c));m.position.set(x,y,z);m.rotation.set(r,0,rz);m.scale.z=.25;g.add(m)};
+if(d.s!=3)fn(0,H,0,0,H*.5,0);fn(L*.3,-H*.4,W,1.2,H*.3,-.8);fn(L*.3,-H*.4,-W,-1.2,H*.3,-.8);
+for(const z of[-1,1]){const e=new THREE.Mesh(new THREE.SphereGeometry(Math.max(.07,H*.12),8,6),new THREE.MeshBasicMaterial({color:0x08283d}));e.position.set(L*.7,H*.25,z*W*.8);g.add(e)}
+g.userData.b=1.5/L;return g}
+function initGL(){if(R)return;R=new THREE.WebGLRenderer({canvas:$('cv'),alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));SC=new THREE.Scene();cam=new THREE.PerspectiveCamera(50,1,.1,50);cam.position.z=6;tg=new THREE.Vector2();
+SC.add(new THREE.AmbientLight(0xffffff,.8));const dl=new THREE.DirectionalLight(0xffffff,.8);dl.position.set(3,5,5);SC.add(dl);
+sea=new THREE.Group();const M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true}),sd=new THREE.Mesh(new THREE.CylinderGeometry(3,3.2,.2,16),M(0xc9a25f));sd.position.y=-2;sea.add(sd);
+[[-1.8,0xe8b84a],[1.6,0xe8707a],[.4,0x3fa56b],[-.6,0x7d8f9a]].forEach(([x,c],i)=>{const m=new THREE.Mesh(new THREE.ConeGeometry(.3,.9+i*.1,5),M(c));m.position.set(x,-1.45,(i%2?.6:-.4));sea.add(m)});SC.add(sea);rs();requestAnimationFrame(loop)}
+function rs(){initGL();const c=$('cv'),w=c.clientWidth,h=c.clientHeight;if(!w)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener('resize',()=>R&&rs());
+function w2(x,y){const c=$('cv'),w=c.clientWidth,h=c.clientHeight,hh=Math.tan(.4363)*6;return new THREE.Vector2((2*x/w-1)*hh*w/h,-(2*y/h-1)*hh)}
+function open(i){fi=i;if(F)SC.remove(F);F=null;zm=1;if(i!=null){F=mk(D[i],i);F.scale.setScalar(F.userData.b);SC.add(F);$('ttl').textContent=D[i].n}else $('ttl').textContent='Scan Kartu QR'}
+function hl(){document.querySelectorAll('#mb [data-m]').forEach(b=>b.classList.toggle('a',b.dataset.m==mode))}
+function setMode(m){mode=m;if(F){F.rotation.set(0,0,0);F.position.set(0,0,0)}auto=m=='putar';tg.set(0,0);hl();$('hint').textContent={putar:'Geser untuk memutar, cubit untuk memperbesar',gerak:'Ketuk atau seret layar: ikan berenang ke jarimu',bebas:'Ikan berenang bebas, ketuk untuk memanggilnya',seret:'Seret ikan ke akuarium di bawah, lalu lepaskan'}[m];$('dz').style.display=m=='seret'?'block':'none'}
+function zoom(f){zm=Math.min(2.6,Math.max(.4,zm*f));if(F)F.scale.setScalar(F.userData.b*zm)}
+function viewFish(i){initGL();open(i);setMode('putar');show('view')}
+function scanMode(){initGL();open(null);show('view');setMode('gerak');arOn()}
+const P=new Map();function aim(e){if(mode=='putar')return;const r=$('cv').getBoundingClientRect();tg.copy(w2(e.clientX-r.left,e.clientY-r.top));if(mode=='bebas')nt=T+4;if(mode=='seret'&&F){F.position.set(tg.x,tg.y,0);F.rotation.z=.3}}
+const cv=$('cv');cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);P.set(e.pointerId,[e.clientX,e.clientY]);if(P.size==1)aim(e)};
+cv.onpointermove=e=>{const o=P.get(e.pointerId);if(!o)return;if(P.size==2){const a=[...P.values()];const d0=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);P.set(e.pointerId,[e.clientX,e.clientY]);const b=[...P.values()];zoom(Math.hypot(b[0][0]-b[1][0],b[0][1]-b[1][1])/d0);return}
+P.set(e.pointerId,[e.clientX,e.clientY]);if(mode=='putar'&&F){F.rotation.y+=(e.clientX-o[0])*.01;F.rotation.x+=(e.clientY-o[1])*.01;auto=0}else aim(e)};
+cv.onpointerup=cv.onpointercancel=e=>{P.delete(e.pointerId);if(mode=='seret'&&F&&F.position.y<-1.5)catchF()};
+function loop(now){requestAnimationFrame(loop);if(cur!='view')return;const dt=Math.min((now-last)/1000,.05);last=now;T+=dt;
+if(F){let sp=0;if(mode!='putar'){if(mode=='bebas'&&T>nt){tg.set(Math.random()*4.4-2.2,Math.random()*2.4-1.2);nt=T+2+Math.random()*2}
+const dx=tg.x-F.position.x,dy=tg.y-F.position.y,dd=Math.hypot(dx,dy);if(dd>.06){sp=Math.min(dd*1.3,2.2);F.position.x+=dx/dd*sp*dt;F.position.y+=dy/dd*sp*dt;const k=Math.min(1,dt*6);F.rotation.y+=((dx<0?Math.PI:0)-F.rotation.y)*k;F.rotation.z+=(Math.atan2(dy,Math.abs(dx))*.6-F.rotation.z)*k}}
+else{if(auto)F.rotation.y+=dt*.8;F.position.y=Math.sin(T*2)*.08}
+F.userData.tail.rotation.y=Math.sin(T*(5+sp*5))*(.35+sp*.1)}
+R.render(SC,cam)}
+async function arOn(){try{vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const v=$('vid');v.srcObject=vs;await v.play();ar=1;v.style.display='block';$('vw').style.background='transparent';sea.visible=false;$('arb').classList.add('a');$('hint').textContent='Arahkan kamera ke kartu QR ikan';scan()}catch(e){tt('Kamera tidak tersedia. Buka tautan langsung di Chrome dan izinkan kamera.')}}
+function arOff(){ar=0;if(vs)vs.getTracks().forEach(t=>t.stop());vs=null;$('vid').style.display='none';$('vw').style.background='#1b3a4b';if(sea)sea.visible=true;$('arb').classList.remove('a')}
+const oc=document.createElement('canvas'),ox=oc.getContext('2d',{willReadFrequently:true});
+function scan(){if(!ar)return;const v=$('vid');if(v.videoWidth){const w=320,h=Math.round(w*v.videoHeight/v.videoWidth);oc.width=w;oc.height=h;ox.drawImage(v,0,0,w,h);const c=jsQR(ox.getImageData(0,0,w,h).data,w,h);
+if(c){const m=/ikan-(\d+)/.exec(c.data),k=m&&+m[1];if(m&&D[k]){const L=c.location,r=cv.getBoundingClientRect();tg.copy(w2((L.topLeftCorner.x+L.bottomRightCorner.x)/2/w*r.width,(L.topLeftCorner.y+L.bottomRightCorner.y)/2/h*r.height));
+if(k!==fi){open(k);F.position.set(tg.x,tg.y,0);tt('Kartu terdeteksi: '+D[k].n)}mode='gerak';auto=0;hl();zm=Math.min(2.2,Math.max(.5,Math.hypot(L.topRightCorner.x-L.topLeftCorner.x,L.topRightCorner.y-L.topLeftCorner.y)/w*5));F.scale.setScalar(F.userData.b*zm)}}}setTimeout(scan,120)}
+function info(){if(fi==null){tt('Scan kartu QR dulu');return}const d=D[fi];$('ih').innerHTML=sv(d);$('in').textContent=d.n;$('il').textContent=d.l;$('id').innerHTML=[['Habitat',d.h],['Ukuran',d.u],['Makanan',d.m]].map(r=>`<div class="ir"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('');$('if').innerHTML='<b>Tahukah kamu?</b> '+d.f;show('info')}
+let qs,qi,pts;
+function startQ(){const d=D[fi],pl=k=>[...[...new Set(D.map(x=>x[k]))].filter(v=>v!==d[k]).sort(()=>Math.random()-.5).slice(0,2),d[k]].sort(()=>Math.random()-.5);
+qs=[['Di habitat apa '+d.n+' hidup?',pl('h'),d.h],['Apa makanan '+d.n+'?',pl('m'),d.m]];qi=0;pts=0;showQ();show('quiz')}
+function showQ(){const q=qs[qi];$('qn').textContent='Pertanyaan '+(qi+1)+' dari 2';$('qs').textContent='Skor: '+pts;$('qp').style.width=(qi+1)*50+'%';$('qt').textContent=q[0];
+$('qo').innerHTML=q[1].map((o,i)=>`<button class="op"><u>${'ABC'[i]}</u>${o}</button>`).join('');
+[...$('qo').children].forEach((b,i)=>b.onclick=()=>{if($('qo').dataset.l)return;$('qo').dataset.l=1;const ok=q[1][i]==q[2];if(ok)pts++;b.classList.add(ok?'ok':'no');if(!ok)[...$('qo').children][q[1].indexOf(q[2])].classList.add('ok');$('qs').textContent='Skor: '+pts;
+setTimeout(()=>{delete $('qo').dataset.l;if(++qi<2)showQ();else{$('ds').textContent=pts;show('done')}},1000)})}
+function mkCards(){if($('cg').children.length)return;const u=location.href.split('#')[0];D.forEach((d,i)=>{const c=document.createElement('div');c.className='qc';c.innerHTML=`<b>#${i+1} ${d.n}</b><div></div><i>${d.l}</i>`;$('cg').appendChild(c);new QRCode(c.children[1],{text:u+'#ikan-'+i,width:120,height:120,correctLevel:QRCode.CorrectLevel.M})})}
+let s2=null,t2=0;function showScan(){show('scan');onScan()}
+async function onScan(){try{s2=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const v=$('sv2');v.srcObject=s2;await v.play();loop2()}catch(e){tt('Kamera tidak tersedia. Pakai tombol Simulasi, atau buka tautan di Chrome dan izinkan kamera.')}}
+function offScan(){if(s2)s2.getTracks().forEach(t=>t.stop());s2=null;clearTimeout(t2)}
+function loop2(){if(!s2)return;const v=$('sv2');if(v.videoWidth){const w=320,h=Math.round(w*v.videoHeight/v.videoWidth);oc.width=w;oc.height=h;ox.drawImage(v,0,0,w,h);const c=jsQR(ox.getImageData(0,0,w,h).data,w,h),m=c&&/ikan-(\d+)/.exec(c.data);if(m&&D[+m[1]]){const k=+m[1];offScan();viewFish(k);arOn();tt('Kartu terdeteksi: '+D[k].n);return}}t2=setTimeout(loop2,150)}
+function simScan(){const k=Math.floor(Math.random()*40);offScan();viewFish(k);tt('Kartu terdeteksi (simulasi): '+D[k].n)}
+let got=new Set(),ai=0;function catchF(){if(!got.has(fi)){if(got.size>=5){tt('Akuarium penuh! 5 ikan terkumpul 🎉');F.position.set(0,0,0);tg.set(0,0);return}got.add(fi)}tt(D[fi].n+' masuk akuarium!');$('cnt').textContent='🐠 '+got.size+' / 5';F.position.set(0,0,0);tg.set(0,0);F.rotation.z=0;if(got.size==5)setTimeout(()=>tt('Selamat! Akuarium kamu sudah penuh 🎉'),2300)}
+function anat(){if(!F){tt('Pilih atau scan ikan dulu');return}const a=['Sirip punggung: menjaga ikan tetap tegak','Sirip dada: mengatur arah dan mengerem','Sirip perut: menyeimbangkan tubuh','Ekor: pendorong utama saat berenang','Mata: mencari makanan dan bahaya'];tt(a[ai++%5])}
+function sim(){const k=Math.floor(Math.random()*40);open(k);F.position.set(0,0,0);if(mode=='putar')setMode('gerak');tt('Kartu terdeteksi (simulasi): '+D[k].n)}
+function showQR(){const k=fi==null?Math.floor(Math.random()*40):fi,c=$('qmc');$('qmn').textContent=D[k].n;c.innerHTML='';new QRCode(c,{text:location.href.split('#')[0]+'#ikan-'+k,width:200,height:200,correctLevel:QRCode.CorrectLevel.M});$('qm').style.display='flex'}
+function route(){const m=/ikan-(\d+)/.exec(location.hash);if(m&&D[+m[1]])viewFish(+m[1])}
+addEventListener('hashchange',route);route();mkList();
+</script></body></html>
