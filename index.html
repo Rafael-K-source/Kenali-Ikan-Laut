@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Kenali Ikan Laut AR</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#08283d"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--n:#08283d;--y:#f4b84a;--t:#0e7c8b;--l:#f0f6fa;--x:#0d2a40;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
@@ -103,7 +104,21 @@ const DR={1:[[[.28,0],[.36,.9],[.6,0]]],2:[[[.18,0],[.22,.45],[.8,.4],[.84,0]]],
 const TL={0:[[0,.25*T],[-ta*.9,T],[-ta*.5,0],[-ta*.9,-T],[0,-.25*T]],1:[[0,.2*T],[-ta,T*.9],[-ta*1.2,0],[-ta,-T*.9],[0,-.2*T]],2:[[0,.15*T],[-ta*.8,1.5*T],[-ta*.4,0],[-ta*.8,-1.5*T],[0,-.15*T]],3:[[0,.06],[-L*1.4,0],[0,-.06]],4:[[0,.2*T],[-ta*.5,0],[0,-.2*T]],5:[[0,.9*T],[-ta*.5,.6*T],[-ta*.5,-.6*T],[0,-.9*T]]}[tail];
 const bill=ext==1?[[[L-.08,.08],[L+ev*L,0],[L-.08,-.08]]]:ext==2?[[[L-.08,.2],[L+ev*L,0],[L-.08,-.2]]]:ext==3?[[[L-.1,-.02],[L+ev*L,-Hb*.2],[L-.1,-.14]]]:ext==11?[[[L-.05,.08],[L+ev,0],[L-.05,-.08]]]:[],hump=ext==10?[[X(.7),top(.7)],[X(.78),top(.7)+.2],[X(.92),top(.92)]]:null;
 return{L,Ht,Hb,W,k,ps,ext,X,top,bot,dorsal,tail:TL,bill,hump,pel:dor==7||dor==8?null:fp([[.5,0],[.58,.7],[.7,0]],bot)}}
-function sv(d){const s=sh(d.i),N=10,tp=[],bt=[],fl=s.W>1;for(let i=0;i<N;i++){const t=i/(N-1),h=fl?s.W*ENV(t,s.k):0;tp.push([s.X(t),fl?h:s.top(t)]);bt.push([s.X(t),fl?-h:s.bot(t)])}
+const Yw='#f4b84a',dk=h=>'#'+[1,3,5].map(j=>Math.round(parseInt(h.substr(j,2),16)*.75).toString(16).padStart(2,'0')).join('');
+function fc(p,o){const x=p.reduce((s,q)=>s+q[0],0)/p.length,y=p.reduce((s,q)=>s+q[1],0)/p.length;return p.map((a,j)=>[[a,p[(j+1)%p.length],[x,y]],j%2?'#000':'#fff',j%2?o:o*1.6])}
+function spc(i,c,b){
+if(i==12){const bd=[[1,0],[.35,.55],[-.1,1.4],[-.5,.5],[-.6,.12],[-1.5,0],[-.6,-.12],[-.5,-.5],[-.1,-1.4],[.35,-.55]];return{Q:[[bd,c,1],...fc(bd,.14),[[[.75,0],[.2,.28],[-.35,.2],[-.35,-.2],[.2,-.28]],b,.85]],E:[[.6,.16],[.6,-.16]]}}
+if(i==31){const el=[...Array(12)].map((_,a)=>[.85*Math.cos(a*Math.PI/6),.8*Math.sin(a*Math.PI/6)]);return{Q:[[[[-.9,.5],[-1.2,.42],[-1.2,-.42],[-.9,-.5]],dk(c),1],[[[-.35,.72],[-.7,1.55],[-.95,.3]],Yw,1],[[[-.35,-.72],[-.7,-1.55],[-.95,-.3]],Yw,1],[el,c,1],[el.filter(p=>p[1]<=.01),b,1],...fc(el,.12)],E:[[.5,.2]]}}
+if(i==30){const sn=[[.38,.98],[1,.96],[1,.88],[.38,.8]],hd=[[-.12,1.15],[.38,.98],[.38,.7],[-.12,.6]],to=[[-.12,.6],[.38,.7],[.4,.1],[.12,-.5],[-.22,-.25],[-.28,.3]],tl=[[.12,-.5],[.04,-1.05],[-.38,-1.2],[-.52,-.82],[-.34,-.82],[-.28,-.98],[-.06,-.95],[-.1,-.5]];return{Q:[[tl,dk(c),1],[to,c,1],[hd,c,1],[sn,c,1],[[[-.25,.35],[-.55,.1],[-.25,-.1]],Yw,1],...fc(to,.14),...fc(hd,.12)],E:[[.2,.86]]}}}
+function drw(Q,E){const A=Q.flatMap(a=>a[0]),X=A.map(p=>p[0]),Y=A.map(p=>p[1]),x0=Math.min(...X),x1=Math.max(...X),y0=Math.min(...Y),y1=Math.max(...Y),k=Math.min(90/(x1-x0),42/(y1-y0)),ox=50-k*(x0+x1)/2,oy=25+k*(y0+y1)/2;
+return `<svg viewBox="0 0 100 50">${Q.map(a=>`<polygon points="${a[0].map(p=>(ox+p[0]*k).toFixed(1)+','+(oy-p[1]*k).toFixed(1)).join(' ')}" fill="${a[1]}" opacity="${a[2]}"/>`).join('')}${E.map(e=>`<circle cx="${(ox+e[0]*k).toFixed(1)}" cy="${(oy-e[1]*k).toFixed(1)}" r="1.8" fill="#08283d"/>`).join('')}</svg>`}
+function mkSp(d,i){const g=new THREE.Group(),m=new THREE.Group(),sp=spc(i,d.c,d.b),M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true});
+sp.Q.forEach(([pts,col,op])=>{if(op<1&&col!=d.b)return;const s=new THREE.Shape();pts.forEach((p,n)=>n?s.lineTo(p[0],p[1]):s.moveTo(p[0],p[1]));
+const dp=col==Yw?.05:col==dk(d.c)?.07:col==d.b?(i==12?.14:.32):(i==12?.12:.3),ge=new THREE.ExtrudeGeometry(s,{depth:dp,bevelEnabled:false});ge.translate(0,0,-dp/2);m.add(new THREE.Mesh(ge,M(col)))});
+sp.E.forEach(e=>(i==12?[1]:[-1,1]).forEach(z=>{const o=new THREE.Mesh(new THREE.SphereGeometry(.06,8,6),new THREE.MeshBasicMaterial({color:0x08283d}));o.position.set(e[0],e[1],z*(i==12?.1:.17));m.add(o)}));
+if(i==12)m.rotation.x=-1.1;g.add(m);g.userData.tail=new THREE.Group();
+const bx=new THREE.Box3().setFromObject(g),z=new THREE.Vector3(),ct=new THREE.Vector3();bx.getSize(z);bx.getCenter(ct);m.position.set(-ct.x,-ct.y,-ct.z);g.userData.b=Math.min(3.4/z.x,2.6/z.y);return g}
+function sv(d){const sp=spc(d.i,d.c,d.b);if(sp)return drw(sp.Q,sp.E);const s=sh(d.i),N=10,tp=[],bt=[],fl=s.W>1;for(let i=0;i<N;i++){const t=i/(N-1),h=fl?s.W*ENV(t,s.k):0;tp.push([s.X(t),fl?h:s.top(t)]);bt.push([s.X(t),fl?-h:s.bot(t)])}
 const e1=[s.X(1),0],e0=[s.X(0),0],tl=s.tail.map(p=>[p[0]-s.L,p[1]]),Y='#f4b84a',P=[[tl,d.c],[tl,'#000',.22],...(fl?[]:s.dorsal.map(a=>[a,Y])),...(s.pel?[[s.pel,Y]]:[]),[tp.concat([e1,e0]),d.c],[bt.concat([e1,e0]),d.b]];
 for(let i=0;i<N-2;i+=2){const m=[s.X((i+1)/(N-1)),0];P.push([[tp[i],tp[i+2],m],'#000',.13],[[bt[i],bt[i+2],m],'#fff',.25])}
 s.bill.forEach(a=>P.push([a,d.c]));if(s.hump)P.push([s.hump,d.c]);
@@ -112,7 +127,7 @@ return `<svg viewBox="0 0 100 50">${Q.map(a=>`<polygon points="${a[0].map(p=>(ox
 function bodyG(s,c1,c2){const N=10,Rn=6,P=[],C=[],A=new THREE.Color(c1),B=new THREE.Color(c2),pt=(i,j)=>{const t=i/(N-1),e=ENV(t,s.k),a=j%Rn*6.2832/Rn,y=Math.sin(a);return[s.X(t),y*(y>0?s.Ht:s.Hb)*e,Math.cos(a)*s.W*e]};
 for(let i=0;i<N-1;i++)for(let j=0;j<Rn;j++){const q=[pt(i,j),pt(i+1,j),pt(i+1,j+1),pt(i,j+1)],m=Math.sin((j+.5)*6.2832/Rn),cc=(m<-.3?B:A).clone().multiplyScalar(1+((i*7+j*3)%5-2)*.05);[0,1,2,0,2,3].forEach(n=>{P.push(...q[n]);C.push(cc.r,cc.g,cc.b)})}
 const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.setAttribute('color',new THREE.Float32BufferAttribute(C,3));g.computeVertexNormals();return g}
-function mk(d,i){const s=sh(i),g=new THREE.Group(),m=new THREE.Group(),M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true,side:2}),Y='#f4b84a',
+function mk(d,i){if(i==12||i==30||i==31)return mkSp(d,i);const s=sh(i),g=new THREE.Group(),m=new THREE.Group(),M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true,side:2}),Y='#f4b84a',
 F2=(pts,col)=>{const sp=new THREE.Shape();pts.forEach((p,j)=>j?sp.lineTo(p[0],p[1]):sp.moveTo(p[0],p[1]));return new THREE.Mesh(new THREE.ShapeGeometry(sp),M(col))};
 m.add(new THREE.Mesh(bodyG(s,d.c,d.b),new THREE.MeshLambertMaterial({vertexColors:true,flatShading:true,side:2})));
 s.dorsal.forEach(a=>m.add(F2(a,Y)));if(s.pel)m.add(F2(s.pel,Y));
@@ -181,5 +196,5 @@ function anat(){if(!F){tt('Pilih atau scan ikan dulu');return}const a=['Sirip pu
 function sim(){const k=Math.floor(Math.random()*40);open(k);F.position.set(0,0,0);if(mode=='putar')setMode('gerak');tt('Kartu terdeteksi (simulasi): '+D[k].n)}
 function showQR(){const k=fi==null?Math.floor(Math.random()*40):fi,c=$('qmc');$('qmn').textContent=D[k].n;c.innerHTML='';new QRCode(c,{text:location.href.split('#')[0]+'#ikan-'+k,width:240,height:240,correctLevel:QRCode.CorrectLevel.M});$('qm').style.display='flex'}
 function route(){const m=/ikan-(\d+)/.exec(location.hash);if(m&&D[+m[1]])viewFish(+m[1])}
-addEventListener('hashchange',route);route();mkList();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});addEventListener('hashchange',route);route();mkList();
 </script></body></html>
